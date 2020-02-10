@@ -7,9 +7,26 @@ exports.up = async function (knex) {
             tbl.string('project_name', 128)
                 .notNullable();
             tbl.string('project_description', 255);
-            tbl.boolean('completed?')
+            tbl.boolean('completed')
                 .notNullable()
                 .defaultTo(false);
+        });
+
+    // Table of tasks
+    await knex.schema
+        .createTable('tasks', tbl => {
+            tbl.increments();
+            tbl.string('task_description', 255)
+                .notNullable();
+            tbl.string('task_notes')
+            tbl.boolean('task_completed')
+                .notNullable()
+                .defaultTo('false');
+            tbl.integer('project_id')
+                .references('id')
+                .inTable('projects')
+                .onDelete('CASCADE')
+                .onUpdate('CASCADE');
         });
 
     // Table of resources
@@ -19,25 +36,9 @@ exports.up = async function (knex) {
             tbl.string('resource_name', 128)
                 .unique()
                 .notNullable();
-            tbl.string('description', 255);
+            tbl.string('resource_description', 255);
         });
 
-    // Table of tasks
-    await knex.schema
-        .createTable('tasks', tbl => {
-            tbl.increments();
-            tbl.string('description', 255)
-                .notNullable();
-            tbl.string('notes')
-            tbl.boolean('task_completed?')
-                .notNullable()
-                .defaultTo('false');
-            tbl.integer('project_id')
-                .references('id')
-                .inTable('projects')
-                .onDelete('CASCADE')
-                .onUpdate('CASCADE');
-        });
 
     // Intermediary table between projects and resources
     await knex.schema
@@ -65,7 +66,7 @@ exports.up = async function (knex) {
 exports.down = function (knex) {
     return knex.schema
         .dropTableIfExists('project_resources')
-        .dropTableIfExists('tasks')
         .dropTableIfExists('resources')
+        .dropTableIfExists('tasks')
         .dropTableIfExists('projects')
 };
