@@ -7,9 +7,9 @@ const TaskRouter = require('./routers/taskRouter');
 const server = express();
 
 server.use(express.json());
-server.use('./api/projects', ProjectRouter);
-server.use('./api/resources', ResourceRouter);
-server.use('./api/tasks', TaskRouter);
+server.use('/api/projects', ProjectRouter);
+server.use('/api/resources', ResourceRouter);
+server.use('/api/tasks', TaskRouter);
 
 server.get('/', (req, res) => {
     res.send('<h2>jeffreyo3\'s Project-Task-Resource API is alive!</h2>')
