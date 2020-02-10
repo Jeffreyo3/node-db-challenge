@@ -17,6 +17,7 @@ exports.up = async function (knex) {
         .createTable('resources', tbl => {
             tbl.increments();
             tbl.string('resource_name', 128)
+                .unique()
                 .notNullable();
             tbl.string('description', 255);
         });
@@ -31,6 +32,31 @@ exports.up = async function (knex) {
             tbl.boolean('task_completed?')
                 .notNullable()
                 .defaultTo('false');
+            tbl.integer('project_id')
+                .references('id')
+                .inTable('projects')
+                .onDelete('CASCADE')
+                .onUpdate('CASCADE');
+        });
+
+    // Intermediary table between projects and resources
+    await knex.schema
+        .createTable('project_resources', tbl => {
+            tbl.increments();
+            tbl.integer('project_id')
+                .unsigned()
+                .notNullable()
+                .references('id')
+                .inTable('projects')
+                .onDelete('CASCADE')
+                .onUpdate('CASCADE');
+            tbl.integer('resource_id')
+                .unsigned()
+                .notNullable()
+                .references('id')
+                .inTable('resources')
+                .onDelete('CASCADE')
+                .onUpdate('CASCADE');
         });
 };
 
@@ -38,6 +64,7 @@ exports.up = async function (knex) {
 
 exports.down = function (knex) {
     return knex.schema
+        .dropTableIfExists('project_resources')
         .dropTableIfExists('tasks')
         .dropTableIfExists('resources')
         .dropTableIfExists('projects')
