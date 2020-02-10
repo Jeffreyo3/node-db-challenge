@@ -1,10 +1,10 @@
 const express = require('express');
 
-const TaskRouter = require('./routers/taskRouter');
+const ProjectRouter = require('./routers/projectRouter');
 
 const server = express();
 
 server.use(express.json());
-server.use('./api/tasks', TaskRouter);
+server.use('./api/projects', ProjectRouter);
 
 module.exports = server;
