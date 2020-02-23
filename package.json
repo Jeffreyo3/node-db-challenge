@@ -1,0 +1,38 @@
+{
+  "name": "db-challenge",
+  "version": "1.0.0",
+  "description": "In this challenge, you design and build a Data Model and a RESTful API that stores data into a Relational Database.",
+  "main": "\u001e",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db:seed": "knex seed:run",
+    "server": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jeffreyo3/node-db-challenge.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jeffreyo3/node-db-challenge/issues"
+  },
+  "homepage": "https://github.com/Jeffreyo3/node-db-challenge#readme",
+  "keywords": [
+    "api",
+    "node",
+    "sqlite3"
+  ],
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^3.21.2",
+    "knex": "^0.20.9",
+    "sqlite3": "^4.1.1"
+  },
+  "devDependencies": {
+    "knex-cleaner": "^1.3.0",
+    "nodemon": "^2.0.2"
+  }
+}
